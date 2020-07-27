@@ -1,0 +1,26 @@
+version: "3"
+services:
+  web:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      # Dont create a reference for this folder just have a placeholder in the container
+      - /app/node_modules
+        # have a reference for all the files inside current context in /app
+      - .:/app
+
+  test:
+    stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      # Dont create a reference for this folder just have a placeholder in the container
+      - /app/node_modules
+        # have a reference for all the files inside current context in /app
+      - .:/app
+    command: ["npm", "run", "test"]
